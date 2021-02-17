@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Hello World!</title>
-    <script src="angular.js"></script>
+
+    <script src="./lib/angular.js"></script>
+    
     <script>
         //module creation -- [] modules,componentes injection
         angular.module("helloWorld", []);
         // localing module -- there is not a second parameter
         // .controler("hereGoesTheControllersName") + function to declare the exactly location of where the controller will be declared 
-        // $scope - injected and a path to the view
+        // $scope - injected a path to the view
         angular.module("helloWorld").controller("helloWorldController", function ($scope) {
             $scope.message = "Hello World!";
         });
