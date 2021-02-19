@@ -12,7 +12,7 @@
 
     <style>
         .jumbotron {
-            width: 25rem;
+            width: 27rem;
             text-align: center;
             margin-top: 1.25rem;
             margin-left: auto;
@@ -98,7 +98,12 @@
                 <option value="">Selecione uma operadora</option>                      <!--     operadora.codigo as operadora.nome  value = codigo    -->
             </select>                                                                  <!-- operadora.nome group by operadora.categoria  divide carriers into categories -->
             <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar novo contato</button>
-            <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-disabled="!isContatoSelecionado(contatos)">Apagar contatos</button>
+            <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-show="isContatoSelecionado(contatos)">Apagar contatos</button>
+            <!-- ng-if: interacts with the DOM and the element is conditionally created or removed 
+            ng-show/hng-hide: interacts with the css - adds or remove a 'display: none;'
+            performance must me considered when choosing one of them
+            -->
+
     </div>
 </body>
 </html>
