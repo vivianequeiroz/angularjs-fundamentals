@@ -37,9 +37,9 @@
         angular.module("listaTelefonica").controller("listaTelefonicaController", function($scope) {
             $scope.app = "Lista Telefônica";
             $scope.contatos = [
-                {nome: "João", telefone: "12345678"},
-                {nome: "Viviane", telefone: "87654321"},
-                {nome: "Sofia", telefone: "132435465"},
+                {nome: "João", telefone: "12345678", cor: "blue"},
+                {nome: "Viviane", telefone: "87654321", cor: "purple"},
+                {nome: "Sofia", telefone: "132435465", cor: "orange"},
             ];
             $scope.operadoras = [
                 {nome: "Oi", código: 14, categoria: "Celular"},
@@ -76,15 +76,17 @@
                 <th>Nome</th>
                 <th>Telefone</th>
                 <th>Operadora</th>
+                <th></th>
             </tr>
             <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
                 <td><input type="checkbox" ng-model="contato.selecionado"/></td>
                 <td>{{contato.nome}}</td>
                 <td>{{contato.telefone}}</td>
                 <td>{{contato.operadora.nome}}</td>
-            <!-- alternative way:
-                <td ng-repeat="(key,value) in contato">
-                    {{value}}
+                <td><div style="width: 1.25rem; height: 1.25rem;" ng-style="{'background-color': contato.cor}"></div></td>
+                <!-- alternative way:
+                    <td ng-repeat="(key,value) in contato">
+                        {{value}}
                 </td> -->
             </tr>
         </table>
