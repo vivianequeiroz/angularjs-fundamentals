@@ -24,6 +24,12 @@
         .form-control {
             margin-bottom: 0.3125rem;
         }
+        .selecionado {
+            background-color: rgba(255, 0, 0, 0.192);
+        }
+        .negrito {
+            font-weight: bold;
+        }
     </style>
 
     <script>
@@ -46,6 +52,16 @@
                 $scope.contatos.push(angular.copy(contato));
                 delete $scope.contato;
             };
+            $scope.apagarContatos = function (contatos) {
+                $scope.contatos = contatos.filter(function (contato) {
+                    if (!contato.selecionado) return contato; 
+                });
+            };
+            $scope.isContatoSelecionado = function (contatos) {
+                return contatos.some(function (contato) {
+                    return contato.selecionado;
+                })
+            }
         });
     </script>
 </head>
@@ -54,13 +70,15 @@
         <h3 ng-bind="app"></h3>
         <!-- alternative way - can be seen in case of slow loading of application: 
             <h4>{{app}}</h4> -->
-        <table class="table table-striped">
+        <table class="table">
             <tr>
+                <th></th>
                 <th>Nome</th>
                 <th>Telefone</th>
                 <th>Operadora</th>
             </tr>
-            <tr ng-repeat="contato in contatos">
+            <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
+                <td><input type="checkbox" ng-model="contato.selecionado"/></td>
                 <td>{{contato.nome}}</td>
                 <td>{{contato.telefone}}</td>
                 <td>{{contato.operadora.nome}}</td>
@@ -78,6 +96,7 @@
                 <option value="">Selecione uma operadora</option>                      <!--     operadora.codigo as operadora.nome  value = codigo    -->
             </select>                                                                  <!-- operadora.nome group by operadora.categoria  divide carriers into categories -->
             <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar novo contato</button>
+            <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-disabled="!isContatoSelecionado(contatos)">Apagar contatos</button>
     </div>
 </body>
 </html>
