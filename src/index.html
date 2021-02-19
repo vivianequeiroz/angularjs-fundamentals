@@ -35,6 +35,13 @@
                 {nome: "Viviane", telefone: "87654321"},
                 {nome: "Sofia", telefone: "132435465"},
             ];
+            $scope.operadoras = [
+                {nome: "Oi", código: 14, categoria: "Celular"},
+                {nome: "Vivo", código: 15, categoria: "Celular"},
+                {nome: "Tim", código: 41, categoria: "Celular"},
+                {nome: "GVT", código: 25, categoria: "Fixo"},
+                {nome: "Embratel", código: 21, categoria: "Fixo"},
+            ]
             $scope.adicionarContato = function(contato) {
                 $scope.contatos.push(angular.copy(contato));
                 delete $scope.contato;
@@ -51,10 +58,12 @@
             <tr>
                 <th>Nome</th>
                 <th>Telefone</th>
+                <th>Operadora</th>
             </tr>
             <tr ng-repeat="contato in contatos">
                 <td>{{contato.nome}}</td>
                 <td>{{contato.telefone}}</td>
+                <td>{{contato.operadora.nome}}</td>
             <!-- alternative way:
                 <td ng-repeat="(key,value) in contato">
                     {{value}}
@@ -65,8 +74,10 @@
             <hr/>
             <input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome"/>
             <input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone"/>
-            
-            <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)">Adicionar novo contato</button>
+            <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome for operadora in operadoras">
+                <option value="">Selecione uma operadora</option>                      <!--     operadora.codigo as operadora.nome  value = codigo    -->
+            </select>                                                                  <!-- operadora.nome group by operadora.categoria  divide carriers into categories -->
+            <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar novo contato</button>
     </div>
 </body>
 </html>
