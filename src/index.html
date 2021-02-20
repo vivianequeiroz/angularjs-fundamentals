@@ -33,8 +33,12 @@
     </style>
 
     <script>
+        //module creation - a container for different parts from the app 
         angular.module("listaTelefonica", []);
+        //module configuration          //controller constructor function  - contains bussiness logic            //scop - context where the model is stored so that controllers, directives and expressions can access it
         angular.module("listaTelefonica").controller("listaTelefonicaController", function($scope) {
+            // scopes can watch expressions and propagate events
+            // they are an execution context for expressions
             $scope.app = "Lista Telefônica";
             $scope.contatos = [
                 {nome: "João", telefone: "12345678", cor: "blue"},
@@ -90,19 +94,32 @@
                 </td> -->
             </tr>
         </table>
-            <!-- ngModel: inputs, selects and textarea-->
-            <hr/>
-            <input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome"/>
-            <input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone"/>
+
+        <!-- ngModel: inputs, selects and textarea -->
+        <hr/>
+
+        <form name="contatoForm"> <!-- creates an objet for validation in scope -->
+            <input class="form-control" type="text" ng-model="contato.nome" name="nome" placeholder="Nome" ng-required="true"/>
+            <input class="form-control" type="text" ng-model="contato.telefone" name="telefone" placeholder="Telefone" ng-required="true"//>
+
             <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome for operadora in operadoras">
                 <option value="">Selecione uma operadora</option>                      <!--     operadora.codigo as operadora.nome  value = codigo    -->
-            </select>                                                                  <!-- operadora.nome group by operadora.categoria  divide carriers into categories -->
-            <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar novo contato</button>
-            <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-show="isContatoSelecionado(contatos)">Apagar contatos</button>
-            <!-- ng-if: interacts with the DOM and the element is conditionally created or removed 
-            ng-show/hng-hide: interacts with the css - adds or remove a 'display: none;'
-            performance must me considered when choosing one of them
-            -->
+            </select>   
+        </form>  
+
+        <div ng-show="contatoForm.nome.$invalid" class="alert alert-danger">
+            Por favor, preencha o nome!
+        </div>
+        <div ng-show="contatoForm.telefone.$invalid" class="alert alert-danger">
+            Por favor, preencha o telefone!
+        </div>
+                                                             <!-- operadora.nome group by operadora.categoria  divide carriers into categories -->
+        <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="contatoForm.$invalid">Adicionar novo contato</button>
+        <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-show="isContatoSelecionado(contatos)">Apagar contatos</button>
+        <!-- ng-if: interacts with the DOM and the element is conditionally created or removed 
+        ng-show/hng-hide: interacts with the css - adds or remove a 'display: none;'
+        performance must me considered when choosing one of them
+        -->  
     </div>
     <div ng-include="'footer.html'"></div>
 </body>
