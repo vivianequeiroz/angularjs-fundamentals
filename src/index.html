@@ -55,6 +55,7 @@
             $scope.adicionarContato = function(contato) {
                 $scope.contatos.push(angular.copy(contato));
                 delete $scope.contato;
+                $scope.contatoForm.$setPristine(); // it erases the invalid messages from $dirty after a phone is added into the list
             };
             $scope.apagarContatos = function (contatos) {
                 $scope.contatos = contatos.filter(function (contato) {
@@ -106,11 +107,11 @@
                 <option value="">Selecione uma operadora</option>                      <!--     operadora.codigo as operadora.nome  value = codigo    -->
             </select>   
         </form>  
-
-        <div ng-show="contatoForm.nome.$invalid" class="alert alert-danger">
+        <!-- $dirty if the user erases the field once, it will be "dirty" and the message will be displayed -->
+        <div ng-show="contatoForm.nome.$invalid && contatoForm.nome.$dirty" class="alert alert-danger">
             Por favor, preencha o nome!
         </div>
-        <div ng-show="contatoForm.telefone.$invalid" class="alert alert-danger">
+        <div ng-show="contatoForm.telefone.$invalid && contatoForm.telefone.$dirty"" class="alert alert-danger">
             Por favor, preencha o telefone!
         </div>
                                                              <!-- operadora.nome group by operadora.categoria  divide carriers into categories -->
