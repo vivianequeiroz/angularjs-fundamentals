@@ -68,7 +68,11 @@
                 return contatos.some(function (contato) {
                     return contato.selecionado;
                 })
-            }
+            };
+            $scope.ordernarPor = function (campo) {
+                $scope.criterioDeOrdenacao = campo;
+                $scope.direcaoDaOrdenacao = !$scope.direcaoDaOrdenacao;
+            };
         });
     </script>
 </head>
@@ -77,19 +81,20 @@
         <h3 ng-bind="app"></h3>
         <!-- alternative way - can be seen in case of slow loading of application: 
             <h4>{{app}}</h4> -->
+        <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="Digite o que deseja buscar">
         <table class="table">
             <tr>
                 <th></th>
-                <th>Nome</th>
-                <th>Telefone</th>
+                <th><a href="" ng-click="odernarPor('nome')">Nome</a></th>
+                <th><a href="" ng-click="odernarPor('telefone')">Telefone</a></th>
                 <th>Operadora</th>
                 <th>Data</th>
-            </tr>
-            <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
+            </tr>                                                                                                                                               <!-- ascendent (false) or descedent (true) order-->
+            <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter:criterioDeBusca | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao"> <!--  to only filter the name filed: | filter: {nome: criterioDeBusca} -->
                 <td><input type="checkbox" ng-model="contato.selecionado"/></td>
-                <td>{{contato.nome | uppercase }}</td>
+                <td>{{contato.nome | uppercase}}</td>
                 <td>{{contato.telefone}}</td>
-                <td>{{contato.operadora.nome | lowercase }}</td>
+                <td>{{contato.operadora.nome | lowercase}}</td>
                 <td>{{contato.data | date: 'dd/MM/yyyy HH:mm'}}</td>
                 <!-- <td><div style="width: 1.25rem; height: 1.25rem;}"></div></td> -->
                 <!-- alternative way:
@@ -106,7 +111,7 @@
             <input class="form-control" type="text" ng-model="contato.nome" name="nome" placeholder="Nome" ng-required="true" ng-minlength="2"/>
             <input class="form-control" type="text" ng-model="contato.telefone" name="telefone" placeholder="Telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/"/>
 
-            <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome for operadora in operadoras">
+            <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome for operadora in operadoras | orderBy:'nome'">
                 <option value="">Selecione uma operadora</option>                      <!--     operadora.codigo as operadora.nome  value = codigo    -->
             </select>   
         </form>  
