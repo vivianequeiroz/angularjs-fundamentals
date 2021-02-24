@@ -39,12 +39,12 @@
         //module creation - a container for different parts from the app 
         angular.module("listaTelefonica", ["ngMessages"]);
         //module configuration          //controller constructor function  - contains bussiness logic            //scop - context where the model is stored so that controllers, directives and expressions can access it
-        angular.module("listaTelefonica").controller("listaTelefonicaController", function($scope) {
+        angular.module("listaTelefonica").controller("listaTelefonicaController", function($scope, $filter) {
             // scopes can watch expressions and propagate events
             // they are an execution context for expressions
             $scope.app = "Lista Telefônica";
             $scope.contatos = [
-                {nome: "João", telefone: "12345678", data: new Date(), operadora: {nome: "Oi", código: 14, categoria: "celular"}},
+                {nome: $filter('uppercase')("João"), telefone: "12345678", data: new Date(), operadora: {nome: "Oi", código: 14, categoria: "celular"}},
                 {nome: "Viviane", telefone: "87654321", data: new Date(), operadora: {nome: "Vivo", código: 15, categoria: "celular"}},
                 {nome: "Sofia", telefone: "132435465", data: new Date(), data: new Date(), operadora: {nome: "Tim", código: 41, categoria: "celular"}},
             ];
@@ -91,9 +91,9 @@
                 <th>Operadora</th>
                 <th>Data</th>
             </tr>                                                                                                                                               <!-- ascendent (false) or descedent (true) order-->
-            <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter:criterioDeBusca | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao"> <!--  to only filter the name filed: | filter: {nome: criterioDeBusca} -->
+            <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter:criterioDeBusca | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao"> <!-- to only filter the name filed: | filter: {nome: criterioDeBusca} --> 
                 <td><input type="checkbox" ng-model="contato.selecionado"/></td>
-                <td>{{contato.nome | uppercase}}</td>
+                <td>{{contato.nome}}</td>
                 <td>{{contato.telefone}}</td>
                 <td>{{contato.operadora.nome | lowercase}}</td>
                 <td>{{contato.data | date: 'dd/MM/yyyy HH:mm'}}</td>
@@ -146,6 +146,7 @@
         ng-show/hng-hide: interacts with the css - adds or remove a 'display: none;'
         performance must me considered when choosing one of them
         -->  
+        <!-- {{ 100.26 | number:1 }} -->
     </div>
     <div ng-include="'footer.html'"></div>
 </body>
