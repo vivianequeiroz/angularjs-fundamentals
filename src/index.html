@@ -9,6 +9,7 @@
 
     <script src="../lib/angular.js"></script>
     <script src="../lib/angular-messages.js"></script>
+    <script src="../node_modules/angular-locale-pt-br/angular-locale_pt-br.js"></script>
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -48,11 +49,11 @@
                 {nome: "Sofia", telefone: "132435465", data: new Date(), data: new Date(), operadora: {nome: "Tim", código: 41, categoria: "celular"}},
             ];
             $scope.operadoras = [
-                {nome: "Oi", código: 14, categoria: "Celular"},
-                {nome: "Vivo", código: 15, categoria: "Celular"},
-                {nome: "Tim", código: 41, categoria: "Celular"},
-                {nome: "GVT", código: 25, categoria: "Fixo"},
-                {nome: "Embratel", código: 21, categoria: "Fixo"},
+                {nome: "Oi", código: 14, categoria: "Celular", preco: 2},
+                {nome: "Vivo", código: 15, categoria: "Celular", preco: 2},
+                {nome: "Tim", código: 41, categoria: "Celular", preco: 1},
+                {nome: "GVT", código: 25, categoria: "Fixo", preco: 3},
+                {nome: "Embratel", código: 21, categoria: "Fixo", preco: 2.5},
             ]
             $scope.adicionarContato = function(contato) {
                 $scope.contatos.push(angular.copy(contato));
@@ -111,7 +112,7 @@
             <input class="form-control" type="text" ng-model="contato.nome" name="nome" placeholder="Nome" ng-required="true" ng-minlength="2"/>
             <input class="form-control" type="text" ng-model="contato.telefone" name="telefone" placeholder="Telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/"/>
 
-            <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome for operadora in operadoras | orderBy:'nome'">
+            <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome + ' ( ' + (operadora.preco | currency) + ' ) ' for operadora in operadoras | orderBy:'nome'">
                 <option value="">Selecione uma operadora</option>                      <!--     operadora.codigo as operadora.nome  value = codigo    -->
             </select>   
         </form>  
